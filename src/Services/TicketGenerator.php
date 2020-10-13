@@ -6,7 +6,7 @@
  * Time: 10:22
  */
 
-namespace Leo108\CAS\Services;
+namespace JuheData\CAS\Services;
 
 use Illuminate\Support\Str;
 

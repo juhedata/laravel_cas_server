@@ -6,13 +6,13 @@
  * Time: 20:19
  */
 
-namespace Leo108\CAS\Repositories;
+namespace JuheData\CAS\Repositories;
 
 use Carbon\Carbon;
-use Leo108\CAS\Contracts\Models\UserModel;
-use Leo108\CAS\Exceptions\CAS\CasException;
-use Leo108\CAS\Models\Ticket;
-use Leo108\CAS\Services\TicketGenerator;
+use JuheData\CAS\Contracts\Models\UserModel;
+use JuheData\CAS\Exceptions\CAS\CasException;
+use JuheData\CAS\Models\Ticket;
+use JuheData\CAS\Services\TicketGenerator;
 
 class TicketRepository
 {

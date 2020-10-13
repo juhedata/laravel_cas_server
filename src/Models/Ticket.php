@@ -6,15 +6,15 @@
  * Time: 14:53
  */
 
-namespace Leo108\CAS\Models;
+namespace JuheData\CAS\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Leo108\CAS\Contracts\Models\UserModel;
+use JuheData\CAS\Contracts\Models\UserModel;
 
 /**
  * Class Ticket
- * @package Leo108\CAS\Models
+ * @package JuheData\CAS\Models
  *
  * @property integer   $id
  * @property string    $ticket

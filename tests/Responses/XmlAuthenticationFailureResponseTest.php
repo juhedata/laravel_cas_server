@@ -6,7 +6,7 @@
  * Time: 13:29
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
 use TestCase;
 
@@ -16,19 +16,19 @@ class XmlAuthenticationFailureResponseTest extends TestCase
     {
         $resp    = new XmlAuthenticationFailureResponse();
         $content = $this->getXML($resp);
-        $this->assertNotContains('cas:authenticationFailure', $content);
+        $this->assertStringNotContainsString('cas:authenticationFailure', $content);
         $resp->setFailure('code1', 'desc1');
         $content = $this->getXML($resp);
-        $this->assertContains('cas:authenticationFailure', $content);
-        $this->assertContains('code1', $content);
-        $this->assertContains('desc1', $content);
+        $this->assertStringContainsString('cas:authenticationFailure', $content);
+        $this->assertStringContainsString('code1', $content);
+        $this->assertStringContainsString('desc1', $content);
         $resp->setFailure('code2', 'desc2');
         $content = $this->getXML($resp);
-        $this->assertContains('cas:authenticationFailure', $content);
-        $this->assertNotContains('code1', $content);
-        $this->assertContains('code2', $content);
-        $this->assertNotContains('desc1', $content);
-        $this->assertContains('desc2', $content);
+        $this->assertStringContainsString('cas:authenticationFailure', $content);
+        $this->assertStringNotContainsString('code1', $content);
+        $this->assertStringContainsString('code2', $content);
+        $this->assertStringNotContainsString('desc1', $content);
+        $this->assertStringContainsString('desc2', $content);
     }
 
     protected function getXML(XmlAuthenticationFailureResponse $resp)

@@ -6,7 +6,7 @@
  * Time: 07:24
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
 
 use TestCase;
@@ -17,17 +17,17 @@ class XmlProxySuccessResponseTest extends TestCase
     {
         $resp    = new XmlProxySuccessResponse();
         $content = $this->getXML($resp);
-        $this->assertNotContains('cas:proxyTicket', $content);
+        $this->assertStringNotContainsString('cas:proxyTicket', $content);
         $resp->setProxyTicket('proxy ticket1');
         $content = $this->getXML($resp);
-        $this->assertContains('cas:proxyTicket', $content);
-        $this->assertContains('proxy ticket1', $content);
+        $this->assertStringContainsString('cas:proxyTicket', $content);
+        $this->assertStringContainsString('proxy ticket1', $content);
 
         $resp->setProxyTicket('proxy ticket2');
         $content = $this->getXML($resp);
-        $this->assertContains('cas:proxyTicket', $content);
-        $this->assertNotContains('proxy ticket1', $content);
-        $this->assertContains('proxy ticket2', $content);
+        $this->assertStringContainsString('cas:proxyTicket', $content);
+        $this->assertStringNotContainsString('proxy ticket1', $content);
+        $this->assertStringContainsString('proxy ticket2', $content);
     }
 
     protected function getXML(XmlProxySuccessResponse $resp)

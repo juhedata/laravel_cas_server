@@ -6,9 +6,9 @@
  * Time: 16:25
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
-use Leo108\CAS\Contracts\Responses\AuthenticationFailureResponse;
+use JuheData\CAS\Contracts\Responses\AuthenticationFailureResponse;
 
 class XmlAuthenticationFailureResponse extends BaseXmlResponse implements AuthenticationFailureResponse
 {

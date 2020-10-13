@@ -6,10 +6,10 @@
  * Time: 20:13
  */
 
-namespace Leo108\CAS\Repositories;
+namespace JuheData\CAS\Repositories;
 
-use Leo108\CAS\Models\Service;
-use Leo108\CAS\Models\ServiceHost;
+use JuheData\CAS\Models\Service;
+use JuheData\CAS\Models\ServiceHost;
 
 class ServiceRepository
 {

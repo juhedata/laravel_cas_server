@@ -6,9 +6,11 @@
  * Time: 18:05
  */
 
-namespace Leo108\CAS\Exceptions\CAS;
+namespace JuheData\CAS\Exceptions\CAS;
 
-class CasException extends \Exception
+use Exception;
+
+class CasException extends Exception
 {
     const INVALID_REQUEST = 'INVALID_REQUEST';
     const INVALID_TICKET = 'INVALID_TICKET';
@@ -26,7 +28,7 @@ class CasException extends \Exception
     public function __construct($casErrorCode, $msg = '')
     {
         $this->casErrorCode = $casErrorCode;
-        $this->message      = $msg;
+        $this->message = $msg;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 $options = [
     'prefix'    => config('cas.router.prefix'),
-    'namespace' => '\Leo108\CAS\Http\Controllers',
+    'namespace' => '\JuheData\CAS\Http\Controllers',
 ];
 
 if (config('cas.middleware.common')) {

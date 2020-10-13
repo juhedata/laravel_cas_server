@@ -1,11 +1,11 @@
 <?php
 
-namespace Leo108\CAS\Repositories;
+namespace JuheData\CAS\Repositories;
 
 use Mockery;
 use TestCase;
-use Leo108\CAS\Models\Service;
-use Leo108\CAS\Models\ServiceHost;
+use JuheData\CAS\Models\Service;
+use JuheData\CAS\Models\ServiceHost;
 
 /**
  * Created by PhpStorm.

@@ -6,13 +6,13 @@
  * Time: 15:17
  */
 
-namespace Leo108\CAS\Models;
+namespace JuheData\CAS\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ServiceHost
- * @package Leo108\CAS\Models
+ * @package JuheData\CAS\Models
  *
  * @property integer $service_id
  * @property Service $service

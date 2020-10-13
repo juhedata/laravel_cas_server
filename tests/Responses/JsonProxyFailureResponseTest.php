@@ -6,7 +6,7 @@
  * Time: 07:23
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
 use TestCase;
 

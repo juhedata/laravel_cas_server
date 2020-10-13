@@ -6,9 +6,9 @@
  * Time: 16:23
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
-use Leo108\CAS\Contracts\Responses\AuthenticationFailureResponse;
+use JuheData\CAS\Contracts\Responses\AuthenticationFailureResponse;
 
 class JsonAuthenticationFailureResponse extends BaseJsonResponse implements AuthenticationFailureResponse
 {

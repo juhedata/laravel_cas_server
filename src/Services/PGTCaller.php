@@ -6,7 +6,7 @@
  * Time: 11:01
  */
 
-namespace Leo108\CAS\Services;
+namespace JuheData\CAS\Services;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;

@@ -6,16 +6,16 @@
  * Time: 21:39
  */
 
-namespace Leo108\CAS\Repositories;
+namespace JuheData\CAS\Repositories;
 
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Leo108\CAS\Contracts\Models\UserModel;
-use Leo108\CAS\Exceptions\CAS\CasException;
-use Leo108\CAS\Models\PGTicket;
-use Leo108\CAS\Models\Service;
-use Leo108\CAS\Services\TicketGenerator;
+use JuheData\CAS\Contracts\Models\UserModel;
+use JuheData\CAS\Exceptions\CAS\CasException;
+use JuheData\CAS\Models\PGTicket;
+use JuheData\CAS\Models\Service;
+use JuheData\CAS\Services\TicketGenerator;
 use Mockery;
 use TestCase;
 

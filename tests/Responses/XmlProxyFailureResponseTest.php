@@ -6,7 +6,7 @@
  * Time: 07:24
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
 
 use TestCase;
@@ -17,19 +17,19 @@ class XmlProxyFailureResponseTest extends TestCase
     {
         $resp    = new XmlProxyFailureResponse();
         $content = $this->getXML($resp);
-        $this->assertNotContains('cas:proxyFailure', $content);
+        $this->assertStringNotContainsString('cas:proxyFailure', $content);
         $resp->setFailure('code1', 'desc1');
         $content = $this->getXML($resp);
-        $this->assertContains('cas:proxyFailure', $content);
-        $this->assertContains('code1', $content);
-        $this->assertContains('desc1', $content);
+        $this->assertStringContainsString('cas:proxyFailure', $content);
+        $this->assertStringContainsString('code1', $content);
+        $this->assertStringContainsString('desc1', $content);
         $resp->setFailure('code2', 'desc2');
         $content = $this->getXML($resp);
-        $this->assertContains('cas:proxyFailure', $content);
-        $this->assertNotContains('code1', $content);
-        $this->assertContains('code2', $content);
-        $this->assertNotContains('desc1', $content);
-        $this->assertContains('desc2', $content);
+        $this->assertStringContainsString('cas:proxyFailure', $content);
+        $this->assertStringNotContainsString('code1', $content);
+        $this->assertStringContainsString('code2', $content);
+        $this->assertStringNotContainsString('desc1', $content);
+        $this->assertStringContainsString('desc2', $content);
     }
 
     protected function getXML(XmlProxyFailureResponse $resp)

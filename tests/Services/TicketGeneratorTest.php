@@ -6,7 +6,7 @@
  * Time: 07:08
  */
 
-namespace Leo108\CAS\Services;
+namespace JuheData\CAS\Services;
 
 use Mockery;
 use TestCase;

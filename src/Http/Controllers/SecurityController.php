@@ -6,18 +6,18 @@
  * Time: 14:50
  */
 
-namespace Leo108\CAS\Http\Controllers;
+namespace JuheData\CAS\Http\Controllers;
 
-use Leo108\CAS\Contracts\Interactions\UserLogin;
-use Leo108\CAS\Contracts\Models\UserModel;
-use Leo108\CAS\Events\CasUserLoginEvent;
-use Leo108\CAS\Events\CasUserLogoutEvent;
-use Leo108\CAS\Exceptions\CAS\CasException;
+use JuheData\CAS\Contracts\Interactions\UserLogin;
+use JuheData\CAS\Contracts\Models\UserModel;
+use JuheData\CAS\Events\CasUserLoginEvent;
+use JuheData\CAS\Events\CasUserLogoutEvent;
+use JuheData\CAS\Exceptions\CAS\CasException;
 use Illuminate\Http\Request;
-use Leo108\CAS\Repositories\PGTicketRepository;
-use Leo108\CAS\Repositories\ServiceRepository;
-use Leo108\CAS\Repositories\TicketRepository;
-use function Leo108\CAS\cas_route;
+use JuheData\CAS\Repositories\PGTicketRepository;
+use JuheData\CAS\Repositories\ServiceRepository;
+use JuheData\CAS\Repositories\TicketRepository;
+use function JuheData\CAS\cas_route;
 
 class SecurityController extends Controller
 {

@@ -6,7 +6,7 @@
  * Time: 15:16
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
 use Symfony\Component\HttpFoundation\Response;
 

@@ -6,9 +6,9 @@
  * Time: 17:48
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
-use Leo108\CAS\Contracts\Responses\ProxyFailureResponse;
+use JuheData\CAS\Contracts\Responses\ProxyFailureResponse;
 
 class XmlProxyFailureResponse extends BaseXmlResponse implements ProxyFailureResponse
 {

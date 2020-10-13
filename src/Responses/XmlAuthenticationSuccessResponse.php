@@ -6,9 +6,9 @@
  * Time: 16:01
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
-use Leo108\CAS\Contracts\Responses\AuthenticationSuccessResponse;
+use JuheData\CAS\Contracts\Responses\AuthenticationSuccessResponse;
 use SimpleXMLElement;
 
 class XmlAuthenticationSuccessResponse extends BaseXmlResponse implements AuthenticationSuccessResponse

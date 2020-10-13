@@ -1,10 +1,10 @@
 <?php
 
-namespace Leo108\CAS\Events;
+namespace JuheData\CAS\Events;
 
 use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
-use Leo108\CAS\Contracts\Models\UserModel;
+use JuheData\CAS\Contracts\Models\UserModel;
 
 class CasUserLoginEvent extends Event
 {

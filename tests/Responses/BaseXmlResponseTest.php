@@ -6,7 +6,7 @@
  * Time: 15:12
  */
 
-namespace Leo108\CAS\Responses;
+namespace JuheData\CAS\Responses;
 
 use Mockery;
 use SerializableModel;
@@ -24,7 +24,7 @@ class BaseXmlResponseTest extends TestCase
     protected $testObj;
     public static $functions;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->testObj   = new BaseXmlResponse();
         self::$functions = Mockery::mock();
@@ -59,7 +59,7 @@ class BaseXmlResponseTest extends TestCase
     {
         $xml    = new SimpleXMLElement('<cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas"/>');
         $method = self::getNonPublicMethod($this->testObj, 'removeXmlFirstLine');
-        $this->assertNotContains('<?xml version="1.0"?>', $method->invoke($this->testObj, $xml->asXML()));
+        $this->assertStringNotContainsString('<?xml version="1.0"?>', $method->invoke($this->testObj, $xml->asXML()));
 
         $normalStr = 'some string';
         $this->assertEquals($normalStr, $method->invoke($this->testObj, $normalStr));
@@ -69,18 +69,18 @@ class BaseXmlResponseTest extends TestCase
     {
         $xml = new SimpleXMLElement('<cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas"/>');
         $xml->addChild('cas:tag', '123');
-        $this->assertContains('cas:tag', $xml->asXML());
-        $this->assertContains('123', $xml->asXML());
+        $this->assertStringContainsString('cas:tag', $xml->asXML());
+        $this->assertStringContainsString('123', $xml->asXML());
         $method = self::getNonPublicMethod($this->testObj, 'removeByXPath');
         $method->invoke($this->testObj, $xml, 'cas:tag');
-        $this->assertNotContains('cas:tag', $xml->asXML());
-        $this->assertNotContains('123', $xml->asXML());
+        $this->assertStringNotContainsString('cas:tag', $xml->asXML());
+        $this->assertStringNotContainsString('123', $xml->asXML());
     }
 
     public function testGetRootNode()
     {
         $method = self::getNonPublicMethod($this->testObj, 'getRootNode');
-        $this->assertContains(
+        $this->assertStringContainsString(
             '<cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas"/>',
             $method->invoke($this->testObj)->asXML()
         );

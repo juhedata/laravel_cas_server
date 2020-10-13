@@ -6,26 +6,26 @@
  * Time: 14:52
  */
 
-namespace Leo108\CAS\Http\Controllers;
+namespace JuheData\CAS\Http\Controllers;
 
 use Illuminate\Support\Str;
-use Leo108\CAS\Contracts\TicketLocker;
-use Leo108\CAS\Repositories\PGTicketRepository;
-use Leo108\CAS\Repositories\TicketRepository;
-use Leo108\CAS\Exceptions\CAS\CasException;
-use Leo108\CAS\Models\Ticket;
+use JuheData\CAS\Contracts\TicketLocker;
+use JuheData\CAS\Repositories\PGTicketRepository;
+use JuheData\CAS\Repositories\TicketRepository;
+use JuheData\CAS\Exceptions\CAS\CasException;
+use JuheData\CAS\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Leo108\CAS\Responses\JsonAuthenticationFailureResponse;
-use Leo108\CAS\Responses\JsonAuthenticationSuccessResponse;
-use Leo108\CAS\Responses\JsonProxyFailureResponse;
-use Leo108\CAS\Responses\JsonProxySuccessResponse;
-use Leo108\CAS\Responses\XmlAuthenticationFailureResponse;
-use Leo108\CAS\Responses\XmlAuthenticationSuccessResponse;
-use Leo108\CAS\Responses\XmlProxyFailureResponse;
-use Leo108\CAS\Responses\XmlProxySuccessResponse;
-use Leo108\CAS\Services\PGTCaller;
-use Leo108\CAS\Services\TicketGenerator;
+use JuheData\CAS\Responses\JsonAuthenticationFailureResponse;
+use JuheData\CAS\Responses\JsonAuthenticationSuccessResponse;
+use JuheData\CAS\Responses\JsonProxyFailureResponse;
+use JuheData\CAS\Responses\JsonProxySuccessResponse;
+use JuheData\CAS\Responses\XmlAuthenticationFailureResponse;
+use JuheData\CAS\Responses\XmlAuthenticationSuccessResponse;
+use JuheData\CAS\Responses\XmlProxyFailureResponse;
+use JuheData\CAS\Responses\XmlProxySuccessResponse;
+use JuheData\CAS\Services\PGTCaller;
+use JuheData\CAS\Services\TicketGenerator;
 use SimpleXMLElement;
 
 class ValidateController extends Controller

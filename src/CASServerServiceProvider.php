@@ -6,13 +6,13 @@
  * Time: 17:49
  */
 
-namespace Leo108\CAS;
+namespace JuheData\CAS;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class CASServerServiceProvider
- * @package Leo108\CAS
+ * @package JuheData\CAS
  */
 class CASServerServiceProvider extends ServiceProvider
 {
