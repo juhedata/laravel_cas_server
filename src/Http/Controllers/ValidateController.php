@@ -56,11 +56,11 @@ class ValidateController extends Controller
 
     /**
      * ValidateController constructor.
-     * @param TicketLocker       $ticketLocker
-     * @param TicketRepository   $ticketRepository
+     * @param TicketLocker $ticketLocker
+     * @param TicketRepository $ticketRepository
      * @param PGTicketRepository $pgTicketRepository
-     * @param TicketGenerator    $ticketGenerator
-     * @param PGTCaller          $pgtCaller
+     * @param TicketGenerator $ticketGenerator
+     * @param PGTCaller $pgtCaller
      */
     public function __construct(
         TicketLocker $ticketLocker,
@@ -69,17 +69,17 @@ class ValidateController extends Controller
         TicketGenerator $ticketGenerator,
         PGTCaller $pgtCaller
     ) {
-        $this->ticketLocker       = $ticketLocker;
-        $this->ticketRepository   = $ticketRepository;
+        $this->ticketLocker = $ticketLocker;
+        $this->ticketRepository = $ticketRepository;
         $this->pgTicketRepository = $pgTicketRepository;
-        $this->ticketGenerator    = $ticketGenerator;
-        $this->pgtCaller          = $pgtCaller;
+        $this->ticketGenerator = $ticketGenerator;
+        $this->pgtCaller = $pgtCaller;
     }
 
     public function v1ValidateAction(Request $request)
     {
         $service = $request->get('service', '');
-        $ticket  = $request->get('ticket', '');
+        $ticket = $request->get('ticket', '');
         if (empty($service) || empty($ticket)) {
             return new Response('no');
         }
@@ -122,7 +122,7 @@ class ValidateController extends Controller
 
     public function proxyAction(Request $request)
     {
-        $pgt    = $request->get('pgt', '');
+        $pgt = $request->get('pgt', '');
         $target = $request->get('targetService', '');
         $format = strtoupper($request->get('format', 'XML'));
 
@@ -151,15 +151,15 @@ class ValidateController extends Controller
 
     /**
      * @param Request $request
-     * @param bool    $returnAttr
-     * @param bool    $allowProxy
+     * @param bool $returnAttr
+     * @param bool $allowProxy
      * @return Response
      */
     protected function casValidate(Request $request, $returnAttr, $allowProxy)
     {
         $service = $request->get('service', '');
-        $ticket  = $request->get('ticket', '');
-        $format  = strtoupper($request->get('format', 'XML'));
+        $ticket = $request->get('ticket', '');
+        $format = strtoupper($request->get('format', 'XML'));
         if (empty($service) || empty($ticket)) {
             return $this->authFailureResponse(
                 CasException::INVALID_REQUEST,
@@ -178,8 +178,9 @@ class ValidateController extends Controller
                 throw new CasException(CasException::INVALID_TICKET, 'ticket is not valid');
             }
 
-            if ($record->service_url != $service) {
-                throw new CasException(CasException::INVALID_SERVICE, 'service is not valid');
+            if (!$service || trim($record->service_url) != trim($service)) {
+                throw new CasException(CasException::INVALID_SERVICE,
+                    'service is not valid [recordServiceUrl:' . $record->service_url . '::postServiceUrl:' . $service);
             }
         } catch (CasException $e) {
             //invalid ticket if error occur
@@ -199,12 +200,12 @@ class ValidateController extends Controller
         $this->unlockTicket($ticket);
 
         //handle pgt
-        $iou    = null;
+        $iou = null;
         $pgtUrl = $request->get('pgtUrl', '');
         if ($pgtUrl) {
             try {
                 $pgTicket = $this->pgTicketRepository->applyTicket($user, $pgtUrl, $proxies);
-                $iou      = $this->ticketGenerator->generateOne(config('cas.pg_ticket_iou_len', 64), 'PGTIOU-');
+                $iou = $this->ticketGenerator->generateOne(config('cas.pg_ticket_iou_len', 64), 'PGTIOU-');
                 if (!$this->pgtCaller->call($pgtUrl, $pgTicket->ticket, $iou)) {
                     $iou = null;
                 }
@@ -219,10 +220,10 @@ class ValidateController extends Controller
     }
 
     /**
-     * @param string      $username
-     * @param string      $format
-     * @param array       $attributes
-     * @param array       $proxies
+     * @param string $username
+     * @param string $format
+     * @param array $attributes
+     * @param array $proxies
      * @param string|null $pgt
      * @return Response
      */
