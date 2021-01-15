@@ -150,6 +150,20 @@ class ValidateController extends Controller
     }
 
     /**
+     * 只校验service主体部分，不校验query参数部分，
+     *
+     * @param $recordService
+     * @param $service
+     * @return bool
+     */
+    protected function checkService($recordService, $service)
+    {
+        $recordService = explode('?', $recordService);
+        $service = explode('?', $service);
+        return strtolower(trim($recordService[0])) == strtolower(trim($service[0]));
+    }
+
+    /**
      * @param Request $request
      * @param bool $returnAttr
      * @param bool $allowProxy
@@ -178,7 +192,7 @@ class ValidateController extends Controller
                 throw new CasException(CasException::INVALID_TICKET, 'ticket is not valid');
             }
 
-            if (!$service || trim($record->service_url) != trim($service)) {
+            if (!$service || !trim($record->service_url) || !$this->checkService($record->service_url, $service)) {
                 throw new CasException(CasException::INVALID_SERVICE,
                     'service is not valid [recordServiceUrl:' . $record->service_url . '::postServiceUrl:' . $service);
             }
