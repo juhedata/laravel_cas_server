@@ -84,19 +84,26 @@ class ValidateController extends Controller
             return new Response('no');
         }
 
+        // 锁定有效ticket：如果有特殊需求可以自定义处理LockTicket->acquireLock
         if (!$this->lockTicket($ticket)) {
             return new Response('no');
         }
+
+        // 查询Ticket是否存在
         $record = $this->ticketRepository->getByTicket($ticket);
         if (!$record || $record->service_url != $service) {
             $this->unlockTicket($ticket);
 
             return new Response('no');
         }
+
+        // 删除Ticket，使当前ticket失效
         $this->ticketRepository->invalidTicket($record);
 
+        // 释放ticket
         $this->unlockTicket($ticket);
 
+        // 校验通过
         return new Response('yes');
     }
 
@@ -171,9 +178,16 @@ class ValidateController extends Controller
      */
     protected function casValidate(Request $request, $returnAttr, $allowProxy)
     {
+        // service
         $service = $request->get('service', '');
+
+        // ticket
         $ticket = $request->get('ticket', '');
+
+        // 返回数据格式:XML、JSON；默认XML
         $format = strtoupper($request->get('format', 'XML'));
+
+        // 抛出异常，缺少必要参数
         if (empty($service) || empty($ticket)) {
             return $this->authFailureResponse(
                 CasException::INVALID_REQUEST,
@@ -182,42 +196,53 @@ class ValidateController extends Controller
             );
         }
 
+        // 锁定Ticket
         if (!$this->lockTicket($ticket)) {
             return $this->authFailureResponse(CasException::INTERNAL_ERROR, 'try to lock ticket failed', $format);
         }
 
+        // 获取Ticket记录
         $record = $this->ticketRepository->getByTicket($ticket);
         try {
+            // ticket处理
             if (!$record || (!$allowProxy && $record->isProxy())) {
                 throw new CasException(CasException::INVALID_TICKET, 'ticket is not valid');
             }
 
+            // service 处理: 在进行登录的时候回携带service,登录成功后，service会和发放的Ticket存放到一起；
+            // 等ticket进行校验的时候，同时会校验service和存储的service是否一致
+            // 这里进行特殊处理了，不校验service的query参数部分，只校验url主体path
             if (!$service || !trim($record->service_url) || !$this->checkService($record->service_url, $service)) {
                 throw new CasException(CasException::INVALID_SERVICE,
                     'service is not valid [recordServiceUrl:' . $record->service_url . '::postServiceUrl:' . $service);
             }
         } catch (CasException $e) {
-            //invalid ticket if error occur
+            // 校验异常，且ticket记录存在，删除该Ticket信息
             $record instanceof Ticket && $this->ticketRepository->invalidTicket($record);
             $this->unlockTicket($ticket);
-
+            // 校验失败
             return $this->authFailureResponse($e->getCasErrorCode(), $e->getMessage(), $format);
         }
 
+        // 代理
         $proxies = [];
         if ($record->isProxy()) {
             $proxies = $record->proxies;
         }
 
+        // 用户信息
         $user = $record->user;
+
+        // Ticket删除，解锁
         $this->ticketRepository->invalidTicket($record);
         $this->unlockTicket($ticket);
 
-        //handle pgt
+        // 代理登录校验：例如A、B都是同过cas登录，如果A已登录访问B的受保护资源，可以不需要在B进行再次登录校验
         $iou = null;
         $pgtUrl = $request->get('pgtUrl', '');
         if ($pgtUrl) {
             try {
+                // 这里先等等
                 $pgTicket = $this->pgTicketRepository->applyTicket($user, $pgtUrl, $proxies);
                 $iou = $this->ticketGenerator->generateOne(config('cas.pg_ticket_iou_len', 64), 'PGTIOU-');
                 if (!$this->pgtCaller->call($pgtUrl, $pgTicket->ticket, $iou)) {
@@ -228,6 +253,7 @@ class ValidateController extends Controller
             }
         }
 
+        // 校验通过，返回登录用户信息
         $attr = $returnAttr ? $record->user->getCASAttributes() : [];
 
         return $this->authSuccessResponse($record->user->getName(), $format, $attr, $proxies, $iou);

@@ -11,13 +11,12 @@ This package works for Laravel >=5.5 .
 ## Installation && Usage
 
 - `composer require juhedata/laravel_cas_server`
-- <del>add `JuheData\CAS\CASServerServiceProvider::class` to the `providers` field in `config/app.php`</del>
 - `php artisan vendor:publish --provider="JuheData\CAS\CASServerServiceProvider"`
 - modify `config/cas.php`, fields in config file are all self-described
 - `php artisan migrate`
 - make your `App\User` implement `JuheData\CAS\Contracts\Models\UserModel`
-- create a class implements `JuheData\CAS\Contracts\TicketLocker`
-- create a class implements `JuheData\CAS\Contracts\Interactions\UserLogin`
+- create a class implements `JuheData\CAS\Contracts\TicketLocker`  [TicketLocker示例](https://github.com/juhedata/laravel_cas_server/blob/master/src/Example/CAS/TicketLockerExample.php)
+- create a class implements `JuheData\CAS\Contracts\Interactions\UserLogin` [UserLogin示例](https://github.com/juhedata/laravel_cas_server/blob/master/src/Example/CAS/UserLoginExample.php)
 - visit `http://your-domain/cas/login` to see the login page (assume that you didn't change the `router.prefix` value in `config/cas.php`)
 
 ## Example
