@@ -141,8 +141,6 @@ class SecurityController extends Controller
      */
     public function authenticated(Request $request, UserModel $user)
     {
-        // 这里会添加一个Cas Login Event;如果有需要可以自行进行监听处理
-        event(new CasUserLoginEvent($request, $user));
 
         // 处理登录成功重定向地址
         $serviceUrl = $request->get('service', '');
@@ -153,16 +151,24 @@ class SecurityController extends Controller
                 // 发放登录成功的授权ticket，存储service
                 $ticket = $this->ticketRepository->applyTicket($user, $serviceUrl);
             } catch (CasException $e) {
+                // 这里会添加一个Cas Login Event;如果有需要可以自行进行监听处理
+                $request->offsetSet("user-tickes-msg",$e->getMessage());
+                event(new CasUserLoginEvent($request, $user));
                 // ticket发放异常，跳转登录首页
                 return $this->loginInteraction->redirectToHome([$e->getCasMsg()]);
             }
 
             // 拼接service的query参数和授权Ticket；跳转到客户端进行ticket校验，然后获取用户信息
             $finalUrl = $serviceUrl . ($query ? '&' : '?') . 'ticket=' . $ticket->ticket;
-
+            // 这里会添加一个Cas Login Event;如果有需要可以自行进行监听处理
+            $request->offsetSet("user-tickes-msg",$ticket->ticket);
+            event(new CasUserLoginEvent($request, $user));
             return redirect($finalUrl);
         }
+        // 这里会添加一个Cas Login Event;如果有需要可以自行进行监听处理
+        $request->offsetSet("user-tickes-msg",'service-is-empty');
 
+        event(new CasUserLoginEvent($request, $user));
         return $this->loginInteraction->redirectToHome();
     }
 
